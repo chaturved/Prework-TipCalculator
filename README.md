@@ -1,4 +1,4 @@
-# Pre-work - Tip Calculator Application for iOS
+# Prework - Tip Calculator Application for iOS
 
 Submitted by: Chaturved Lakkaraju
 
