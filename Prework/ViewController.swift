@@ -28,19 +28,46 @@ class ViewController: UIViewController {
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var totalAmountLabel: UILabel!
     
+    let refreshTime: Double = 600;
+    
+    let tip1Default: Double = 15;
+    let tip2Default: Double = 18;
+    let tip3Default: Double = 20;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        setConfigureSettings();
+        setConfiguredSettings();
     }
     
-    func setConfigureSettings(){
+    func setConfiguredSettings(){
         refreshColorMode();
+        refreshDefaultTips();
         refreshBillAmount();
         
     }
     
+    func refreshDefaultTips(){
+        
+        let tips = defaults.array(forKey: "defaultTips");
+        
+        let selectedindex = defaults.integer(forKey: "DefaultTipSelection");
+        
+        if(tips != nil){
+            let tip1Text = "\(tips?[0] ?? tip1Default)%" ;
+            let tip2Text = "\(tips?[1] ?? tip2Default)%" ;
+            let tip3Text = "\(tips?[2] ?? tip3Default)%" ;
+            
+            tipControl.setTitle(tip1Text, forSegmentAt: 0);
+            tipControl.setTitle(tip2Text, forSegmentAt: 1);
+            tipControl.setTitle(tip3Text, forSegmentAt: 2);
+        }
+        
+        tipControl.selectedSegmentIndex = selectedindex;
+        
+    }
+
     func refreshColorMode(){
         let colormode = defaults.string(forKey: "DarkModeSwitchState");
         
@@ -95,7 +122,6 @@ class ViewController: UIViewController {
         
         if(lastdate != nil){
             
-            let refreshTime = Double(600);
             let diff = -1 * Date().distance(to: lastdate as! Date);
             
             if(diff >= refreshTime) {
@@ -113,14 +139,19 @@ class ViewController: UIViewController {
     func updateTip(){
         
         let bill = Double(billAmountTextField.text!) ?? 0;
-        let tipPercentages = [0.15, 0.18, 0.20];
         
-        let tip = bill * tipPercentages[tipControl.selectedSegmentIndex];
+        let tips = defaults.array(forKey: "defaultTips");
         
-        let total = bill + tip;
+        if(tips != nil){
+            
+            let tip = ((tips?[tipControl.selectedSegmentIndex] as! Double) / 100) * bill ;
+            
+            let total = bill + tip;
+            
+            tipAmountLabel.text = String(format: "$%.2f", tip);
+            totalAmountLabel.text = String(format: "$%.2f", total);
+        }
         
-        tipAmountLabel.text = String(format: "$%.2f", tip);
-        totalAmountLabel.text = String(format: "$%.2f", total);
         
     }
     
@@ -142,26 +173,20 @@ class ViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("view will appear")
-        // This is a good place to retrieve the default tip percentage from UserDefaults
-        // and use it to update the tip amount
-        setConfigureSettings();
+        setConfiguredSettings();
         
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print("view did appear")
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        print("view will disappear")
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print("view did disappear")
     }
     
     

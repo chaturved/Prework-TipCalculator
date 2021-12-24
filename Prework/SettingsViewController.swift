@@ -17,10 +17,34 @@ class SettingsViewController: UIViewController {
     
     @IBOutlet weak var darkModeSwitch: UISwitch!
     
+    
+    @IBOutlet weak var defaultTipsLabel: UILabel!
+    
+    
+    @IBOutlet weak var defaultTip1Label: UILabel!
+    @IBOutlet weak var defaultTip1TextField: UITextField!
+    
+    
+    @IBOutlet weak var defaultTip2Label: UILabel!
+    @IBOutlet weak var defaultTip2TextField: UITextField!
+    
+    @IBOutlet weak var defaultTip3Label: UILabel!
+    @IBOutlet weak var defaultTip3TextField: UITextField!
+    
+    
+    @IBOutlet weak var defaultTipSelLabel: UILabel!
+    @IBOutlet weak var defaultTipSelCtrl: UISegmentedControl!
+    
+    let tip1Default: Double = 15;
+    let tip2Default: Double = 18;
+    let tip3Default: Double = 20;
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        setConfiguredSettings();
     }
     
 
@@ -34,6 +58,37 @@ class SettingsViewController: UIViewController {
     }
     */
     
+    func setConfiguredSettings(){
+        refreshColorMode();
+        refreshDefaultTips();
+        refreshDefaultTipsSelector();
+    }
+    
+    
+    @IBAction func changeDefaultTip(_ sender: Any) {
+        let selectedindex = defaultTipSelCtrl.selectedSegmentIndex;
+        
+        defaults.set(selectedindex, forKey: "DefaultTipSelection");
+        defaults.synchronize();
+        
+    }
+    
+    @IBAction func defaultTipTextFieldChanged(){
+        
+        let tip1 = (Double(defaultTip1TextField.text!) ?? tip1Default);
+        let tip2 = (Double(defaultTip2TextField.text!) ?? tip2Default);
+        let tip3 = (Double(defaultTip3TextField.text!) ?? tip3Default);
+        
+        let tips =  [tip1, tip2, tip3];
+        
+        defaults.set(tips, forKey: "defaultTips");
+        
+        defaults.synchronize();
+        
+        refreshDefaultTipsSelector();
+        
+    }
+    
     
     @IBAction func darkModeSwitchChanged(_ sender: Any) {
         
@@ -45,21 +100,47 @@ class SettingsViewController: UIViewController {
             setColorsforLightMode();
             defaults.set("Off", forKey: "DarkModeSwitchState");
         }
+        
+        defaults.synchronize();
     }
     
     func setColorsforDarkMode(){
         
         view.backgroundColor = UIColor.black;
         settingsNavBar.barTintColor = UIColor.black;
+        
         darkModeLabel.textColor = UIColor.white;
+        
+        defaultTipsLabel.textColor = UIColor.yellow;
+        
+        defaultTip1Label.textColor = UIColor.white;
+        defaultTip2Label.textColor = UIColor.white;
+        defaultTip3Label.textColor = UIColor.white;
+        
+        defaultTipSelLabel.textColor = UIColor.white;
+        defaultTipSelCtrl.backgroundColor = UIColor.white;
+        defaultTipSelCtrl.selectedSegmentTintColor = UIColor.systemPink;
+        
         
     }
     
     func setColorsforLightMode(){
         
         view.backgroundColor = UIColor.white;
+        
         settingsNavBar.barTintColor = nil;
+        
         darkModeLabel.textColor = UIColor.black;
+        
+        defaultTipsLabel.textColor = UIColor.systemPink;
+        
+        defaultTip1Label.textColor = UIColor.black;
+        defaultTip2Label.textColor = UIColor.black;
+        defaultTip3Label.textColor = UIColor.black;
+        
+        defaultTipSelLabel.textColor = UIColor.black;
+        defaultTipSelCtrl.backgroundColor = UIColor.white;
+        defaultTipSelCtrl.selectedSegmentTintColor = UIColor.yellow;
         
     }
     
@@ -72,18 +153,43 @@ class SettingsViewController: UIViewController {
                 setColorsforDarkMode();
             }
             else{
-                darkModeSwitch.setOn(false, animated: false)
+                darkModeSwitch.setOn(false, animated: true)
                 setColorsforLightMode();
             }
         }
     }
     
+    func refreshDefaultTips(){
+        
+        let tips = defaults.array(forKey: "defaultTips");
+        
+        if(tips != nil){
+            defaultTip1TextField.text = "\(tips?[0] ?? tip1Default)";
+            defaultTip2TextField.text = "\(tips?[1] ?? tip2Default)";
+            defaultTip3TextField.text = "\(tips?[2] ?? tip3Default)";
+        }
+        
+    }
+    
+    func refreshDefaultTipsSelector(){
+        let tips = defaults.array(forKey: "defaultTips");
+        let selectedindex = defaults.integer(forKey: "DefaultTipSelection");
+        
+        
+        if(tips != nil){
+            defaultTipSelCtrl.setTitle("\(tips?[0] ?? tip1Default)%", forSegmentAt: 0);
+            defaultTipSelCtrl.setTitle("\(tips?[1] ?? tip2Default)%", forSegmentAt: 1);
+            defaultTipSelCtrl.setTitle("\(tips?[2] ?? tip3Default)%", forSegmentAt: 2);
+        }
+        
+        
+        defaultTipSelCtrl.selectedSegmentIndex = selectedindex;
+            
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("view will appear")
-        // This is a good place to retrieve the default tip percentage from UserDefaults
-        // and use it to update the tip amount
-        refreshColorMode();
+        setConfiguredSettings();
     }
     
 }

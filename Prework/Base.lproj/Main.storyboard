@@ -150,6 +150,79 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" Set Default Tips" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fgf-Zx-OQ6">
+                                <rect key="frame" x="4" y="149" width="163" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <color key="textColor" systemColor="systemPinkColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tip 3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6LB-1Q-YRS">
+                                <rect key="frame" x="4" y="276" width="39" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tip 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I2q-2I-BbW">
+                                <rect key="frame" x="5" y="192" width="721" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tip 2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e9g-2u-58D">
+                                <rect key="frame" x="4" y="234" width="39" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="15%" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V1Y-6d-U9C">
+                                <rect key="frame" x="70" y="185" width="97" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="defaultTipTextFieldChanged" destination="VGA-bh-asY" eventType="editingChanged" id="vsb-aC-DNM"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="18%" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tND-f6-Ujl">
+                                <rect key="frame" x="70" y="227" width="97" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="defaultTipTextFieldChanged" destination="VGA-bh-asY" eventType="editingChanged" id="Ah4-Cc-auk"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="20%" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6c5-2b-r3h">
+                                <rect key="frame" x="70" y="269" width="97" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="defaultTipTextFieldChanged" destination="VGA-bh-asY" eventType="editingChanged" id="72u-j0-9cf"/>
+                                </connections>
+                            </textField>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fuF-1f-G1X">
+                                <rect key="frame" x="70" y="313" width="216" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="15%"/>
+                                    <segment title="18%"/>
+                                    <segment title="20%"/>
+                                </segments>
+                                <connections>
+                                    <action selector="changeDefaultTip:" destination="VGA-bh-asY" eventType="valueChanged" id="uzA-2j-DDj"/>
+                                </connections>
+                            </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Default" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U2T-3Z-1ps">
+                                <rect key="frame" x="5" y="318" width="55" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="m3R-GQ-LWf"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -158,12 +231,21 @@
                     <connections>
                         <outlet property="darkModeLabel" destination="aeO-o8-l3t" id="jSS-E3-7me"/>
                         <outlet property="darkModeSwitch" destination="YdR-Rz-6kQ" id="qqt-31-cwG"/>
+                        <outlet property="defaultTip1Label" destination="I2q-2I-BbW" id="CwA-4W-hRD"/>
+                        <outlet property="defaultTip1TextField" destination="V1Y-6d-U9C" id="FmI-rR-Fcx"/>
+                        <outlet property="defaultTip2Label" destination="e9g-2u-58D" id="1q1-q3-g24"/>
+                        <outlet property="defaultTip2TextField" destination="tND-f6-Ujl" id="7jN-kL-Em4"/>
+                        <outlet property="defaultTip3Label" destination="6LB-1Q-YRS" id="XzV-tv-8gw"/>
+                        <outlet property="defaultTip3TextField" destination="6c5-2b-r3h" id="JGd-Bd-8qc"/>
+                        <outlet property="defaultTipSelCtrl" destination="fuF-1f-G1X" id="iMm-k3-MBb"/>
+                        <outlet property="defaultTipSelLabel" destination="U2T-3Z-1ps" id="LM9-oC-Wxu"/>
+                        <outlet property="defaultTipsLabel" destination="fgf-Zx-OQ6" id="9Iz-ap-LNs"/>
                         <outlet property="settingsNavBar" destination="w3X-wc-eo3" id="aiQ-ba-hOU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ucs-p9-L7b" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-226" y="19"/>
+            <point key="canvasLocation" x="-226.08695652173915" y="18.75"/>
         </scene>
     </scenes>
     <resources>
