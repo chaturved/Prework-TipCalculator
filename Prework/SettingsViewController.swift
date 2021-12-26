@@ -44,7 +44,7 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        setConfiguredSettings();
+        //setConfiguredSettings();
     }
     
 
@@ -69,7 +69,7 @@ class SettingsViewController: UIViewController {
         let selectedindex = defaultTipSelCtrl.selectedSegmentIndex;
         
         defaults.set(selectedindex, forKey: "DefaultTipSelection");
-        defaults.synchronize();
+        //defaults.synchronize();
         
     }
     
@@ -83,7 +83,7 @@ class SettingsViewController: UIViewController {
         
         defaults.set(tips, forKey: "defaultTips");
         
-        defaults.synchronize();
+        //defaults.synchronize();
         
         refreshDefaultTipsSelector();
         
@@ -101,7 +101,7 @@ class SettingsViewController: UIViewController {
             defaults.set("Off", forKey: "DarkModeSwitchState");
         }
         
-        defaults.synchronize();
+        //defaults.synchronize();
     }
     
     func setColorsforDarkMode(){
@@ -190,6 +190,18 @@ class SettingsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setConfiguredSettings();
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
 }

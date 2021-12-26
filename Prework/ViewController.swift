@@ -38,7 +38,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        setConfiguredSettings();
+        //setConfiguredSettings();
     }
     
     func setConfiguredSettings(){
@@ -148,8 +148,10 @@ class ViewController: UIViewController {
             
             let total = bill + tip;
             
-            tipAmountLabel.text = String(format: "$%.2f", tip);
-            totalAmountLabel.text = String(format: "$%.2f", total);
+            let currentRegion = Locale.current;
+            
+            tipAmountLabel.text = String(format: "%@%@", currentRegion.currencySymbol!, ((round(tip * 100) / 100.0) as NSNumber).description(withLocale: currentRegion));
+            totalAmountLabel.text = String(format: "%@%@", currentRegion.currencySymbol!, ((round(total * 100) / 100.0) as NSNumber).description(withLocale: currentRegion));
         }
         
         
@@ -166,7 +168,7 @@ class ViewController: UIViewController {
         
         defaults.set(Date(), forKey:"LastTimeBillAmountChanged");
         
-        defaults.synchronize();
+        //defaults.synchronize();
         
         updateTip();
     }
