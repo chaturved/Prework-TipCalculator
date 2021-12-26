@@ -39,6 +39,8 @@ class ViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         //setConfiguredSettings();
+        
+        billAmountTextField.becomeFirstResponder();
     }
     
     func setConfiguredSettings(){
@@ -181,6 +183,7 @@ class ViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
     }
 
     override func viewWillDisappear(_ animated: Bool) {
