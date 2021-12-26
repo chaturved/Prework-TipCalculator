@@ -22,11 +22,11 @@ The following **additional** features are implemented:
 
 - [ ] List anything else that you can get done to improve the app functionality!
 
-## Video Walkthrough
+## Video Walkthrough (COMING SOON)
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://g.recordit.co/qh4xRSnL09.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<! --img src='' title='Video Walkthrough' width='' alt='Video Walkthrough' /-->
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
