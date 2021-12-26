@@ -142,22 +142,21 @@ class ViewController: UIViewController {
         
         let bill = Double(billAmountTextField.text!) ?? 0;
         
-        let tips = defaults.array(forKey: "defaultTips");
+        let tips = defaults.array(forKey: "defaultTips") ?? [tip1Default, tip2Default, tip3Default];
         
-        if(tips != nil){
             
-            let tip = ((tips?[tipControl.selectedSegmentIndex] as! Double) / 100) * bill ;
+        let tip = ((tips[tipControl.selectedSegmentIndex] as! Double) / 100) * bill ;
             
-            let total = bill + tip;
+        let total = bill + tip;
             
-            let currentRegion = Locale.current;
+        let currentRegion = Locale.current;
             
-            tipAmountLabel.text = String(format: "%@%@", currentRegion.currencySymbol!, ((round(tip * 100) / 100.0) as NSNumber).description(withLocale: currentRegion));
-            totalAmountLabel.text = String(format: "%@%@", currentRegion.currencySymbol!, ((round(total * 100) / 100.0) as NSNumber).description(withLocale: currentRegion));
-        }
+        tipAmountLabel.text = String(format: "%@%@", currentRegion.currencySymbol!, ((round(tip * 100) / 100.0) as NSNumber).description(withLocale: currentRegion));
         
-        
+        totalAmountLabel.text = String(format: "%@%@", currentRegion.currencySymbol!, ((round(total * 100) / 100.0) as NSNumber).description(withLocale: currentRegion));
     }
+        
+        
     
     
     @IBAction func calculateTip(_ sender: Any) {
