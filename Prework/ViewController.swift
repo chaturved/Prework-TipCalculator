@@ -34,13 +34,26 @@ class ViewController: UIViewController {
     let tip2Default: Double = 18;
     let tip3Default: Double = 20;
     
+    let animationTime: Double = 1;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        //setConfiguredSettings();
         
-        billAmountTextField.becomeFirstResponder();
+        tipCalcNavBar.alpha = 0;
+        
+        billAmountLabel.alpha = 0;
+        billAmountTextField.alpha = 0;
+        
+        tipLabel.alpha = 0;
+        tipAmountLabel.alpha = 0;
+        
+        tipControl.alpha = 0;
+        
+        totalLabel.alpha = 0;
+        totalAmountLabel.alpha = 0;
+        
     }
     
     func setConfiguredSettings(){
@@ -173,6 +186,48 @@ class ViewController: UIViewController {
         
         updateTip();
     }
+    
+    func animateNavBar(){
+        UIView.animate(withDuration: self.animationTime, animations: {
+            self.tipCalcNavBar.alpha = 1;
+        }, completion: { (true) in
+            self.animateBillAmount()
+        });
+    }
+    
+    func animateBillAmount(){
+        UIView.animate(withDuration: self.animationTime, animations: {
+            self.billAmountLabel.alpha = 1;
+            self.billAmountTextField.alpha = 1;
+        }, completion: { (true) in
+            self.animateTip()
+        });
+    }
+    
+    func animateTip(){
+        UIView.animate(withDuration: self.animationTime, animations: {
+            self.tipLabel.alpha = 1;
+            self.tipAmountLabel.alpha = 1;
+        }, completion: {(true) in
+            self.animateTipControl()
+        });
+    }
+        
+    func animateTipControl(){
+        UIView.animate(withDuration: self.animationTime, animations: {
+            self.tipControl.alpha = 1;
+        }, completion: {(true) in
+            self.animateTotal()
+        });
+    }
+        
+    func animateTotal(){
+        UIView.animate(withDuration: self.animationTime, animations: {
+            self.totalLabel.alpha = 1;
+            self.totalAmountLabel.alpha = 1;
+        }, completion: nil);
+    }
+    
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -182,6 +237,8 @@ class ViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        animateNavBar();
+        billAmountTextField.becomeFirstResponder();
         
     }
 
@@ -192,7 +249,6 @@ class ViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
-    
     
 
 }
