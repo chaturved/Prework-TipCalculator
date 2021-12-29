@@ -260,7 +260,7 @@
                                 <rect key="frame" x="70" y="185" width="97" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                 <connections>
                                     <action selector="defaultTipTextFieldChanged" destination="VGA-bh-asY" eventType="editingChanged" id="vsb-aC-DNM"/>
                                 </connections>
@@ -269,7 +269,7 @@
                                 <rect key="frame" x="70" y="227" width="97" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                 <connections>
                                     <action selector="defaultTipTextFieldChanged" destination="VGA-bh-asY" eventType="editingChanged" id="Ah4-Cc-auk"/>
                                 </connections>
@@ -278,7 +278,7 @@
                                 <rect key="frame" x="70" y="269" width="97" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                 <connections>
                                     <action selector="defaultTipTextFieldChanged" destination="VGA-bh-asY" eventType="editingChanged" id="72u-j0-9cf"/>
                                 </connections>

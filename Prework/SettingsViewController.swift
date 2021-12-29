@@ -116,8 +116,11 @@ class SettingsViewController: UIViewController {
         defaultTipsLabel.textColor = UIColor.yellow;
         
         defaultTip1Label.textColor = UIColor.green;
+        defaultTip1TextField.keyboardAppearance = UIKeyboardAppearance.dark;
         defaultTip2Label.textColor = UIColor.green;
-        defaultTip3Label.textColor = UIColor.green
+        defaultTip2TextField.keyboardAppearance = UIKeyboardAppearance.dark;
+        defaultTip3Label.textColor = UIColor.green;
+        defaultTip3TextField.keyboardAppearance = UIKeyboardAppearance.dark;
         
         defaultTipSelLabel.textColor = UIColor.yellow;
         defaultTipSelCtrl.backgroundColor = UIColor.white;
@@ -138,8 +141,11 @@ class SettingsViewController: UIViewController {
         defaultTipsLabel.textColor = UIColor.systemPink;
         
         defaultTip1Label.textColor = UIColor.black;
+        defaultTip1TextField.keyboardAppearance = UIKeyboardAppearance.default;
         defaultTip2Label.textColor = UIColor.black;
+        defaultTip1TextField.keyboardAppearance = UIKeyboardAppearance.default;
         defaultTip3Label.textColor = UIColor.black;
+        defaultTip1TextField.keyboardAppearance = UIKeyboardAppearance.default;
         
         defaultTipSelLabel.textColor = UIColor.black;
         defaultTipSelCtrl.backgroundColor = UIColor.white;

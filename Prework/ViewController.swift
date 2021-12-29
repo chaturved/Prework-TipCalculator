@@ -128,6 +128,7 @@ class ViewController: UIViewController {
         tipCalcNavBar.setTitleVerticalPositionAdjustment(1, for: UIBarMetrics.default);
         
         billAmountLabel.textColor = UIColor.white;
+        billAmountTextField.keyboardAppearance = UIKeyboardAppearance.dark;
         
         tipPercLabel.textColor = UIColor.white;
         tipControl.backgroundColor = UIColor.white;
@@ -159,6 +160,7 @@ class ViewController: UIViewController {
         tipCalcNavBar.setTitleVerticalPositionAdjustment(1, for: UIBarMetrics.default);
         
         billAmountLabel.textColor = UIColor.black;
+        billAmountTextField.keyboardAppearance = UIKeyboardAppearance.default;
         
         tipPercLabel.textColor = UIColor.black;
         tipControl.backgroundColor = UIColor.white;
