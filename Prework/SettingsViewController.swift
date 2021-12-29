@@ -109,16 +109,17 @@ class SettingsViewController: UIViewController {
         
         view.backgroundColor = UIColor.black;
         settingsNavBar.barTintColor = UIColor.black;
+        settingsNavBar.setTitleVerticalPositionAdjustment(1, for: UIBarMetrics.default);
         
-        darkModeLabel.textColor = UIColor.white;
+        darkModeLabel.textColor = UIColor.orange;
         
         defaultTipsLabel.textColor = UIColor.yellow;
         
-        defaultTip1Label.textColor = UIColor.white;
-        defaultTip2Label.textColor = UIColor.white;
-        defaultTip3Label.textColor = UIColor.white;
+        defaultTip1Label.textColor = UIColor.green;
+        defaultTip2Label.textColor = UIColor.green;
+        defaultTip3Label.textColor = UIColor.green
         
-        defaultTipSelLabel.textColor = UIColor.white;
+        defaultTipSelLabel.textColor = UIColor.yellow;
         defaultTipSelCtrl.backgroundColor = UIColor.white;
         defaultTipSelCtrl.selectedSegmentTintColor = UIColor.systemPink;
         
@@ -130,6 +131,7 @@ class SettingsViewController: UIViewController {
         view.backgroundColor = UIColor.white;
         
         settingsNavBar.barTintColor = nil;
+        settingsNavBar.setTitleVerticalPositionAdjustment(1, for: UIBarMetrics.default);
         
         darkModeLabel.textColor = UIColor.black;
         
@@ -141,7 +143,7 @@ class SettingsViewController: UIViewController {
         
         defaultTipSelLabel.textColor = UIColor.black;
         defaultTipSelCtrl.backgroundColor = UIColor.white;
-        defaultTipSelCtrl.selectedSegmentTintColor = UIColor.yellow;
+        defaultTipSelCtrl.selectedSegmentTintColor = UIColor.systemPink;
         
     }
     
@@ -157,6 +159,9 @@ class SettingsViewController: UIViewController {
                 darkModeSwitch.setOn(false, animated: true)
                 setColorsforLightMode();
             }
+        }
+        else {
+            setColorsforLightMode();
         }
     }
     
