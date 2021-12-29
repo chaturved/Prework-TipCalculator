@@ -20,8 +20,10 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
-
+* [x] A settings page was added, which includes dark mode, changing, and selecting default tips
+* [x] User can spilt the bill by selecting the number of people, and then tip and total per person will be displayed.
+* [x] The app was made a little prettier by adding colors.
+ 
 ## Video Walkthrough (COMING SOON)
 
 Here's a walkthrough of implemented user stories:
