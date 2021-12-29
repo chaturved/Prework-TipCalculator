@@ -24,11 +24,11 @@ The following **additional** features are implemented:
 * [x] User can spilt the bill by selecting the number of people, and then tip and total per person will be displayed.
 * [x] The app was made a little prettier by adding colors.
  
-## Video Walkthrough (COMING SOON)
+## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-[comment]: <!--img src='' title='Video Walkthrough' width='' alt='Video Walkthrough' /-->
+[comment]: <!--img src='http://g.recordit.co/LHPbqt9PiX.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' /-->
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
