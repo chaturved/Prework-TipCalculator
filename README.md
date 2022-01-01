@@ -20,9 +20,10 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-* [x] A settings page, which has dark mode, changing, and selecting default tips
+* [x] A settings page, which has dark mode and changing & selecting default tips
 * [x] User can spilt the bill by selecting the number of people, then tip per person and total per person will be displayed.
 * [x] The app was made a little prettier by adding colors.
+* [ ] Currency Converter (in development)
  
 ## Video Walkthrough
 
