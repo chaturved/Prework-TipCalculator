@@ -393,6 +393,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         self.currencyCodes = [];
         
+        // Link to their website https://exchangerate.host/#/
+        
         guard var urlComponents = URLComponents(string: "https://api.exchangerate.host/latest") else {
             print("Link does not work, Exited!");
             return;
