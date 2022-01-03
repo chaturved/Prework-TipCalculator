@@ -28,10 +28,10 @@ The following **additional** features are implemented:
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
-<p float="left">
+<!--p float="left">
  <img src='http://g.recordit.co/LHPbqt9PiX.gif' title='Video Walkthrough' width='' alt='Video Walkthrough'>
  <img src='https://recordit.co/2L2rwhDclT.gif' title='Video Walkthrough' width='' alt='Video Walkthrough'>
-</p>
+</p-->
 
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
