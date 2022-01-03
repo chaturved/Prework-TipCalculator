@@ -55,13 +55,21 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     let animationTime: Double = 0.6;
     
+    let localeFormatter = NumberFormatter();
+    let foreignFormatter = NumberFormatter();
     var currencyCodes: [String] = [];
     var convertedValue: Double = 0.0;
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.exchangeToPicker.delegate = self;
         self.exchangeToPicker.dataSource = self;
+        
+        localeFormatter.numberStyle = .currency;
+        localeFormatter.locale = Locale.current;
+        localeFormatter.maximumFractionDigits = 2;
+        //foreignFormatter.maximumFractionDigits = 2;
     }
     
     func setConfiguredSettings(){
@@ -253,25 +261,20 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let totalPP = total / people;
         let tipPP = tip / people;
         
-        let currentRegion = Locale.current;
-        
-        tipPPAmountLabel.text = String(format: "%@%@", currentRegion.currencySymbol!, ((round(tipPP * 100) / 100.0) as NSNumber).description(withLocale: currentRegion));
-        
-        totalPPAmountLabel.text = String(format: "%@%@", currentRegion.currencySymbol!, ((round(totalPP * 100) / 100.0) as NSNumber).description(withLocale: currentRegion));
-            
-        tipAmountLabel.text = String(format: "%@%@", currentRegion.currencySymbol!, ((round(tip * 100) / 100.0) as NSNumber).description(withLocale: currentRegion));
-        
-        totalAmountLabel.text = String(format: "%@%@", currentRegion.currencySymbol!, ((round(total * 100) / 100.0) as NSNumber).description(withLocale: currentRegion));
+        tipPPAmountLabel.text = localeFormatter.string(from: (tipPP as NSNumber));
+        totalPPAmountLabel.text = localeFormatter.string(from: (totalPP as NSNumber));
+        tipAmountLabel.text = localeFormatter.string(from: (tip as NSNumber));
+        totalAmountLabel.text = localeFormatter.string(from: (total as NSNumber));
         
         //print("before:", currencyCodes);
         //print("total:",total);
         if(currencyCodes.count == 0) {
             //print("inside if");
-            getConversion(convertFrom: currentRegion.currencyCode!, convertTo: "", total: String(total));
+            getConversion(convertFrom: localeFormatter.locale.currencyCode!, convertTo: "", total: String(total));
         }
         else {
             //print("inside else");
-            getConversion(convertFrom: currentRegion.currencyCode!, convertTo: currencyCodes[exchangeToPicker.selectedRow(inComponent: 0)], total: String(total));
+            getConversion(convertFrom: localeFormatter.locale.currencyCode!, convertTo: currencyCodes[exchangeToPicker.selectedRow(inComponent: 0)], total: String(total));
         }
         
         //print("after:", currencyCodes);
@@ -454,19 +457,20 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         if(defaults.string(forKey: "ConverterModeSwitchState") == "On") {
             
             fetchConversionFromServerOLD(convertFrom: convertFrom, convertTo: convertTo, amount: total) {
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [self] in
                     
-                    self.currencyCodes = Array(Set(self.currencyCodes));
-                    self.currencyCodes.sort();
+                    currencyCodes = Array(Set(currencyCodes));
+                    currencyCodes.sort();
                     
-                    //print("currencyCodes:", self.currencyCodes);
+                    exchangeToPicker.reloadComponent(0);
                     
-                    self.exchangeToPicker.reloadComponent(0);
+                    foreignFormatter.currencySymbol = getSymbol(forCurrencyCode: convertTo);
+                    foreignFormatter.numberStyle = .currency;
                     
-                    self.totalAmountDiffCurrLabel.text = String(format: "%@ %@", String(self.convertedValue), convertTo)
+                    totalAmountDiffCurrLabel.text = foreignFormatter.string(from: (convertedValue as NSNumber));
                     
                     if(convertTo == ""){
-                        self.updateTip();
+                        updateTip();
                     }
                 }
                 
@@ -505,6 +509,16 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
     }
     
+    func getSymbol(forCurrencyCode code: String) -> String? {
+        let locale = NSLocale(localeIdentifier: code)
+        if locale.displayName(forKey: .currencySymbol, value: code) == code {
+            let newlocale = NSLocale(localeIdentifier: code.dropLast() + "_en")
+            return newlocale.displayName(forKey: .currencySymbol, value: code)
+        }
+        return locale.displayName(forKey: .currencySymbol, value: code)
+    }
+    
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1;
     }
@@ -534,7 +548,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         updateTip();
     }
     
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setConfiguredSettings();
