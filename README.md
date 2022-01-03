@@ -23,9 +23,9 @@ The following **additional** features are implemented:
 * [x] A settings page, which can enable dark mode, enable currency converter, and change-set default tips
 * [x] User can spilt the bill by selecting the number of people, then tip per person and total per person will be displayed.
 * [x] The app was made a little prettier by adding colors.
-* [ ] Currency Converter (in development)
+* [x] Currency Converter, that converts the locale-specific currency into any foreign currency in real-time using API.
  
-## Video Walkthrough
+## Video Walkthrough (New Video Coming Soon)
 
 Here's a walkthrough of implemented user stories:
 
