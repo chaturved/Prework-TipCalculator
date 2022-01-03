@@ -25,12 +25,12 @@ The following **additional** features are implemented:
 * [x] The app was made a little prettier by adding colors.
 * [x] Currency Converter, that converts the locale-specific currency into any foreign currency in real-time using API.
  
-## Video Walkthrough (New Video Coming Soon)
+## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://g.recordit.co/LHPbqt9PiX.gif' title='Video Walkthrough' width='' alt='Video Walkthrough'>
-<!--img src='https://recordit.co/2L2rwhDclT' title='Video Walkthrough' width='' alt='Video Walkthrough'-->
+<!--img src='http://g.recordit.co/LHPbqt9PiX.gif' title='Video Walkthrough' width='' alt='Video Walkthrough'-->
+<img src='https://recordit.co/2L2rwhDclT.gif' title='Video Walkthrough' width='' alt='Video Walkthrough'-->
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
