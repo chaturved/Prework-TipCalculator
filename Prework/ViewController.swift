@@ -409,7 +409,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             URLQueryItem(name: "base", value: "USD")
         ]
     
-        print(urlComponents.url!);
+        //print(urlComponents.url!);
         
         let request = URLRequest(url: urlComponents.url!);
         
@@ -434,7 +434,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                         
                                 DispatchQueue.main.async {
                                     self.currencyCodes.append(countryCode as! String);
-                                    
                                     if((countryCode as! String) == convertTo){
                                         self.convertedValue = value as? Double ?? 0;
                                     }
@@ -456,13 +455,15 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
             fetchConversionFromServerOLD(convertFrom: convertFrom, convertTo: convertTo, amount: total) {
                 DispatchQueue.main.async {
+                    
                     self.currencyCodes = Array(Set(self.currencyCodes));
                     self.currencyCodes.sort();
-                    print("currencyCodes:",self.currencyCodes);
+                    
+                    //print("currencyCodes:", self.currencyCodes);
                     
                     self.exchangeToPicker.reloadComponent(0);
                     
-                    self.totalAmountDiffCurrLabel.text = String(self.convertedValue);
+                    self.totalAmountDiffCurrLabel.text = String(format: "%@ %@", String(self.convertedValue), convertTo)
                     
                     if(convertTo == ""){
                         self.updateTip();
@@ -503,8 +504,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
         
     }
-    
-    
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1;

@@ -113,9 +113,11 @@ class SettingsViewController: UIViewController {
         defaultTip3Label.textColor = UIColor.green;
         defaultTip3TextField.keyboardAppearance = UIKeyboardAppearance.dark;
         
-        defaultTipSelLabel.textColor = UIColor.yellow;
+        defaultTipSelLabel.textColor = UIColor.green;
         defaultTipSelCtrl.backgroundColor = UIColor.white;
         defaultTipSelCtrl.selectedSegmentTintColor = UIColor.systemPink;
+        
+        converterLabel.textColor = UIColor.magenta;
         
         
     }
@@ -141,6 +143,8 @@ class SettingsViewController: UIViewController {
         defaultTipSelLabel.textColor = UIColor.black;
         defaultTipSelCtrl.backgroundColor = UIColor.white;
         defaultTipSelCtrl.selectedSegmentTintColor = UIColor.systemPink;
+        
+        converterLabel.textColor = UIColor.black;
         
     }
     
