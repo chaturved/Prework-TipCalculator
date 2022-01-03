@@ -9,7 +9,7 @@ import UIKit
 
 let defaults = UserDefaults.standard;
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @IBOutlet weak var tipCalcNavBar: UINavigationBar!
     
@@ -37,6 +37,16 @@ class ViewController: UIViewController {
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var totalAmountLabel: UILabel!
     
+    @IBOutlet weak var currencyExchangeLabel: UILabel!
+    
+    @IBOutlet weak var exchangeToLabel: UILabel!
+    @IBOutlet weak var exchangeToPicker: UIPickerView!
+    
+    
+    @IBOutlet weak var totalDiffCurrLabel: UILabel!
+    @IBOutlet weak var totalAmountDiffCurrLabel: UILabel!
+    
+    
     let refreshTime: Double = 600;
     
     let tip1Default: Double = 15;
@@ -45,15 +55,20 @@ class ViewController: UIViewController {
     
     let animationTime: Double = 0.6;
     
+    var currencyCodes: [String] = [];
+    var convertedValue: Double = 0.0;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.exchangeToPicker.delegate = self;
+        self.exchangeToPicker.dataSource = self;
     }
     
     func setConfiguredSettings(){
         refreshColorMode();
         refreshDefaultTips();
         refreshBillAmount();
-        
+        refreshCurrencyExchangerView();
     }
     
     func refreshAnimation(){
@@ -79,6 +94,14 @@ class ViewController: UIViewController {
         tipAmountLabel.alpha = 0;
         totalLabel.alpha = 0;
         totalAmountLabel.alpha = 0;
+        
+        currencyExchangeLabel.alpha = 0;
+        
+        exchangeToLabel.alpha = 0;
+        exchangeToPicker.alpha = 0;
+        
+        totalDiffCurrLabel.alpha = 0;
+        totalAmountDiffCurrLabel.alpha = 0;
         
         animateNavBar();
         
@@ -148,7 +171,10 @@ class ViewController: UIViewController {
         totalLabel.textColor = UIColor.white;
         totalAmountLabel.textColor = UIColor.green;
         
+        exchangeToLabel.textColor = UIColor.white;
         
+        totalDiffCurrLabel.textColor = UIColor.white;
+        totalAmountDiffCurrLabel.textColor = UIColor.green;
         
     }
     
@@ -179,6 +205,11 @@ class ViewController: UIViewController {
         tipAmountLabel.textColor = UIColor.black;
         totalLabel.textColor = UIColor.black;
         totalAmountLabel.textColor = UIColor.black;
+        
+        exchangeToLabel.textColor = UIColor.black;
+        
+        totalDiffCurrLabel.textColor = UIColor.black;
+        totalAmountDiffCurrLabel.textColor = UIColor.black;
         
     }
     
@@ -217,16 +248,11 @@ class ViewController: UIViewController {
         
             
         let tip = ((tips[tipControl.selectedSegmentIndex] as! Double) / 100) * bill ;
-        
-        
-        
             
         let total = bill + tip;
         let totalPP = total / people;
         let tipPP = tip / people;
         
-        
-            
         let currentRegion = Locale.current;
         
         tipPPAmountLabel.text = String(format: "%@%@", currentRegion.currencySymbol!, ((round(tipPP * 100) / 100.0) as NSNumber).description(withLocale: currentRegion));
@@ -236,6 +262,22 @@ class ViewController: UIViewController {
         tipAmountLabel.text = String(format: "%@%@", currentRegion.currencySymbol!, ((round(tip * 100) / 100.0) as NSNumber).description(withLocale: currentRegion));
         
         totalAmountLabel.text = String(format: "%@%@", currentRegion.currencySymbol!, ((round(total * 100) / 100.0) as NSNumber).description(withLocale: currentRegion));
+        
+        //print("before:", currencyCodes);
+        //print("total:",total);
+        if(currencyCodes.count == 0) {
+            //print("inside if");
+            getConversion(convertFrom: currentRegion.currencyCode!, convertTo: "", total: String(total));
+        }
+        else {
+            //print("inside else");
+            getConversion(convertFrom: currentRegion.currencyCode!, convertTo: currencyCodes[exchangeToPicker.selectedRow(inComponent: 0)], total: String(total));
+        }
+        
+        //print("after:", currencyCodes);
+        //print("total:",total);
+        
+        
     }
         
         
@@ -317,8 +359,178 @@ class ViewController: UIViewController {
             self.totalLabel.alpha = 1;
             self.totalAmountLabel.alpha = 1;
         }, completion: {(true) in
+            self.animateCurrencyExchangerLabel()
+        });
+    }
+    
+    func animateCurrencyExchangerLabel(){
+        UIView.animate(withDuration: self.animationTime, animations: {
+            self.currencyExchangeLabel.alpha = 1;
+        }, completion: {(true) in
+            self.animateExchangeTo()
+        });
+    }
+    
+    func animateExchangeTo(){
+        UIView.animate(withDuration: self.animationTime, animations: {
+            self.exchangeToLabel.alpha = 1;
+            self.exchangeToPicker.alpha = 1;
+        }, completion: {(true) in
+            self.animateTotalExchange()
+        });
+    }
+    
+    func animateTotalExchange(){
+        UIView.animate(withDuration: self.animationTime, animations: {
+            self.totalDiffCurrLabel.alpha = 1;
+            self.totalAmountDiffCurrLabel.alpha = 1;
+        }, completion: {(true) in
             self.billAmountTextField.becomeFirstResponder()
         });
+    }
+    
+    func fetchConversionFromServerOLD(convertFrom: String, convertTo: String, amount: String, completion: @escaping () -> Void){ // Before Swift 5.5
+        
+        self.currencyCodes = [];
+        
+        guard var urlComponents = URLComponents(string: "https://api.exchangerate.host/latest") else {
+            print("Link does not work, Exited!");
+            return;
+        };
+        
+        
+        urlComponents.queryItems = [
+            URLQueryItem(name: "from", value: convertFrom),
+            URLQueryItem(name: "to", value: convertTo), // Need to get it from picker view
+            URLQueryItem(name: "amount", value: amount),
+            URLQueryItem(name: "places", value: "2"),
+            URLQueryItem(name: "base", value: "USD")
+        ]
+    
+        print(urlComponents.url!);
+        
+        let request = URLRequest(url: urlComponents.url!);
+        
+        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
+        
+            if(error != nil) {
+                print("Error:",error as Any);
+                
+            }
+            else {
+                if let content = data {
+                    do {
+                        let JSONCurrencyRateObject = try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject;
+                        
+                        //print(JSONCurrencyRateObject);
+                    
+                        if let rates = JSONCurrencyRateObject!["rates"] as? NSDictionary {
+                            
+                            //print(rates);
+                            
+                            for (countryCode, value) in rates {
+                        
+                                DispatchQueue.main.async {
+                                    self.currencyCodes.append(countryCode as! String);
+                                    
+                                    if((countryCode as! String) == convertTo){
+                                        self.convertedValue = value as? Double ?? 0;
+                                    }
+                                }
+                            }
+                            completion();
+                        }
+                    }
+                }
+            }
+        }
+        task.resume();
+        
+    }
+    
+    func getConversion(convertFrom: String, convertTo: String, total: String){
+        
+        if(defaults.string(forKey: "ConverterModeSwitchState") == "On") {
+            
+            fetchConversionFromServerOLD(convertFrom: convertFrom, convertTo: convertTo, amount: total) {
+                DispatchQueue.main.async {
+                    self.currencyCodes = Array(Set(self.currencyCodes));
+                    self.currencyCodes.sort();
+                    print("currencyCodes:",self.currencyCodes);
+                    
+                    self.exchangeToPicker.reloadComponent(0);
+                    
+                    self.totalAmountDiffCurrLabel.text = String(self.convertedValue);
+                    
+                    if(convertTo == ""){
+                        self.updateTip();
+                    }
+                }
+                
+
+            }
+        }
+        
+    }
+    
+    
+    func refreshCurrencyExchangerView(){
+        let convertermode = defaults.string(forKey: "ConverterModeSwitchState");
+        if(convertermode != nil){
+            if(convertermode == "On"){
+                currencyExchangeLabel.isHidden = false;
+                exchangeToLabel.isHidden = false;
+                exchangeToPicker.isHidden = false;
+                totalDiffCurrLabel.isHidden = false;
+                totalAmountDiffCurrLabel.isHidden = false;
+            }
+            else{
+                currencyExchangeLabel.isHidden = true;
+                exchangeToLabel.isHidden = true;
+                exchangeToPicker.isHidden = true;
+                totalDiffCurrLabel.isHidden = true;
+                totalAmountDiffCurrLabel.isHidden = true;
+            }
+        }
+        else {
+            currencyExchangeLabel.isHidden = true;
+            exchangeToLabel.isHidden = true;
+            exchangeToPicker.isHidden = true;
+            totalDiffCurrLabel.isHidden = true;
+            totalAmountDiffCurrLabel.isHidden = true;
+        }
+        
+    }
+    
+    
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1;
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        //print(currencyCodes.count);
+        return currencyCodes.count;
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
+        return currencyCodes[row];
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        
+        if(currencyCodes.count == 0){
+            return NSAttributedString(string: "", attributes: [NSAttributedString.Key.foregroundColor:exchangeToLabel.textColor!]);
+        }
+        else {
+            return NSAttributedString(string: String(currencyCodes[row]), attributes: [NSAttributedString.Key.foregroundColor:exchangeToLabel.textColor!]);
+        }
+        
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        updateTip();
     }
     
 

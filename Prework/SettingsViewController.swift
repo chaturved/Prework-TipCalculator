@@ -9,7 +9,6 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
-    
     @IBOutlet weak var settingsNavBar: UINavigationBar!
     
     @IBOutlet weak var darkModeLabel: UILabel!
@@ -35,34 +34,26 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var defaultTipSelLabel: UILabel!
     @IBOutlet weak var defaultTipSelCtrl: UISegmentedControl!
     
+    
+    @IBOutlet weak var exchangeLabel: UILabel!
+    
+    @IBOutlet weak var converterLabel: UILabel!
+    @IBOutlet weak var converterSwitch: UISwitch!
+    
     let tip1Default: Double = 15;
     let tip2Default: Double = 18;
     let tip3Default: Double = 20;
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        //setConfiguredSettings();
-        
+        // Do any additional setup after loading the view
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     func setConfiguredSettings(){
         refreshColorMode();
         refreshDefaultTips();
         refreshDefaultTipsSelector();
+        refreshConverterMode();
     }
     
     
@@ -158,15 +149,16 @@ class SettingsViewController: UIViewController {
         
         if(colormode != nil){
             if(colormode == "On"){
-                darkModeSwitch.setOn(true, animated: true)
+                darkModeSwitch.setOn(true, animated: true);
                 setColorsforDarkMode();
             }
             else{
-                darkModeSwitch.setOn(false, animated: true)
+                darkModeSwitch.setOn(false, animated: true);
                 setColorsforLightMode();
             }
         }
         else {
+            darkModeSwitch.setOn(false, animated: true);
             setColorsforLightMode();
         }
     }
@@ -199,6 +191,36 @@ class SettingsViewController: UIViewController {
             
     }
     
+    
+    @IBAction func converterModeSwitchChanged(_ sender: Any) {
+        if(converterSwitch.isOn){
+            defaults.set("On", forKey: "ConverterModeSwitchState");
+        }
+        else {
+            defaults.set("Off", forKey: "ConverterModeSwitchState");
+        }
+    }
+    
+    func refreshConverterMode(){
+        
+        let convertermode = defaults.string(forKey: "ConverterModeSwitchState");
+        
+        if(convertermode != nil){
+            if(convertermode == "On"){
+                converterSwitch.setOn(true, animated: true)
+            }
+            else{
+                converterSwitch.setOn(false, animated: true);
+            }
+        }
+        else {
+            converterSwitch.setOn(false, animated: true);
+        }
+        
+    }
+    
+        
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setConfiguredSettings();
@@ -215,5 +237,6 @@ class SettingsViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
+    
     
 }
