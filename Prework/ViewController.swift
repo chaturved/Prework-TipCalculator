@@ -53,7 +53,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     let tip2Default: Double = 18;
     let tip3Default: Double = 20;
     
-    let animationTime: Double = 0.6;
+    let animationTime: Double = 0.3;
     
     let localeFormatter = NumberFormatter();
     let foreignFormatter = NumberFormatter();
@@ -69,14 +69,17 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         localeFormatter.numberStyle = .currency;
         localeFormatter.locale = Locale.current;
         localeFormatter.maximumFractionDigits = 2;
-        //foreignFormatter.maximumFractionDigits = 2;
+        
+        //setConfiguredSettings();
     }
     
     func setConfiguredSettings(){
+        billAmountTextField.becomeFirstResponder();
         refreshColorMode();
         refreshDefaultTips();
         refreshBillAmount();
         refreshCurrencyExchangerView();
+        updateTip();
     }
     
     func refreshAnimation(){
@@ -232,17 +235,17 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
             if(diff >= refreshTime) {
                 billAmountTextField.text = "";
-                updateTip();
                 refreshAnimation();
             }
             else{
                 billAmountTextField.text = defaults.string(forKey: "Bill Amount");
-                updateTip();
             }
         }
         else {
             refreshAnimation();
         }
+        
+        updateTip();
         
     }
     
@@ -409,10 +412,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             URLQueryItem(name: "to", value: convertTo), // Need to get it from picker view
             URLQueryItem(name: "amount", value: amount),
             URLQueryItem(name: "places", value: "2"),
-            URLQueryItem(name: "base", value: "USD")
+            URLQueryItem(name: "base", value: convertFrom)
         ]
     
-        //print(urlComponents.url!);
+        print(urlComponents.url!);
         
         let request = URLRequest(url: urlComponents.url!);
         
